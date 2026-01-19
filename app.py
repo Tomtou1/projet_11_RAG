@@ -41,3 +41,32 @@ if __name__ == "__main__":
         print(f"\nFirst Doc: {processed_docs[0]}")
         vector_store = text_split_and_vectorize(processed_docs, vector_store, index_path)
         print(f"Vector database saved and ready to use.")
+
+
+    @tool(response_format="content_and_artifact")
+    def retrieve_context(query: str):
+        """Retrieve information to help answer a query."""
+        retrieved_docs = vector_store.similarity_search(query, k=2)
+        serialized = "\n\n".join(
+            (f"Source: {doc.metadata}\nContent: {doc.page_content}")
+            for doc in retrieved_docs
+        )
+        return serialized, retrieved_docs
+    
+
+    tools = [retrieve_context]
+    # If desired, specify custom instructions
+    prompt = (
+        "You are giving recommendations for cultural events."
+    )
+    agent = create_agent(model, tools, system_prompt=prompt)
+
+    query = (
+        "Quel est le meilleur événement si j'aime le HIP HOP?"
+    )
+
+    for event in agent.stream(
+        {"messages": [{"role": "user", "content": query}]},
+        stream_mode="values",
+    ):
+        event["messages"][-1].pretty_print()

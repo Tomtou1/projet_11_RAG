@@ -14,23 +14,26 @@ def read_and_process_inputdata(file_path, debug=False):
         print(f"First event: {raw_data[0]}")
         print(f"Number of events: {len(raw_data)}")
 
-
     #Clean the Data
     df = pd.json_normalize(raw_data) 
     if debug: print(f"DataFrame shape: {df.shape}")
-    df = df[df['location_district'] == 'Lille-Sud']
-    if debug: print(f"DataFrame shape after region selection: {df.shape}")
+    df['firstdate_begin'] = pd.to_datetime(df['firstdate_begin'], errors='coerce',utc=True)
+    print(df['firstdate_begin'].dtype)
+    df = df.dropna(subset=['firstdate_begin'])
+    df = df[df['firstdate_begin'].dt.year == 2025]
+    if debug: print(f"DataFrame shape after year selection: {df.shape}")
+    df = df[df['location_countrycode'] == 'FR']
+    if debug: print(f"DataFrame shape after location selection: {df.shape}")
     df = df.dropna(subset=['longdescription_fr'])
     if debug: print(f"DataFrame shape after dropping NA: {df.shape}")
-
 
     # Feature Engineering for RAG
     df['combined_text'] = (
         "Title: " + df['title_fr'] + "\n" +
         "Description: " + df['longdescription_fr'] + "\n" +
         "Location: " + df['location_address'].fillna('') + 
-        "Date_Start: " + df['firstdate_begin'].fillna('') +
-        "Date_End: " + df['lastdate_end'].fillna('')
+        "Date_Start: " + str(df['firstdate_begin'].fillna('')) +
+        "Date_End: " + str(df['lastdate_end'].fillna(''))
     )
 
     # Text + metadata selection

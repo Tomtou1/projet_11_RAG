@@ -36,13 +36,13 @@ def initialize_rag_system():
     # Load existing vector database or create a new one
     if os.path.exists(index_path):
         vector_store = FAISS.load_local(index_path, embeddings, allow_dangerous_deserialization=True)
-        st.success(f"✅ Loaded existing vector database")
+        st.success(f"Loaded existing vector database")
     else:
         st.warning(f"Creating a new vector database...")
         # Read / Process / Split and Vectorize data
         processed_docs = read_and_process_inputdata('data/evenements-publics-openagenda.json', debug=False)
         vector_store = text_split_and_vectorize(processed_docs, vector_store, index_path)
-        st.success(f"✅ Vector database created and ready to use")
+        st.success(f"Vector database created and ready to use")
 
     @tool(response_format="content_and_artifact")
     def retrieve_context(query: str):
@@ -59,6 +59,8 @@ def initialize_rag_system():
         "You are giving recommendations for cultural events. "
         "Answer in French and be helpful and enthusiastic about cultural activities. "
         "Use the retrieved context to provide specific and accurate information about events."
+        "Be short and precise in your answer, do not give answers that are not from the retrieved context"
+        "The context is about 2025 events, so you need to act like we are right now beginning of the year 2025"
     )
     agent = create_agent(model, tools, system_prompt=system_prompt)
     return agent, vector_store

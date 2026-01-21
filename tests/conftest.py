@@ -3,15 +3,19 @@ from langchain_community.vectorstores import FAISS
 from langchain_text_splitters import SpacyTextSplitter
 from src.read_input_data import read_and_process_inputdata
 import pytest
+from dotenv import load_dotenv
+
+load_dotenv()
 
 @pytest.fixture(scope="session")
 def processed_docs():
-    file_path = "data/evenements-publics-openagenda.json"
+    print("Loading testing fixtures...")
+    file_path = "data/evenements-publics-openagenda-full.json"
     processed_docs = read_and_process_inputdata(file_path, debug=False)
     return processed_docs
 
 @pytest.fixture(scope="session")
-def chunked_docs(processed_docs):
+def chunks(processed_docs):
     nlp_splitter = SpacyTextSplitter(chunk_size=1000, pipeline="fr_core_news_sm")
     chunks = nlp_splitter.split_documents(processed_docs)
     return chunks

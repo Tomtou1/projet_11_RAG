@@ -40,7 +40,7 @@ def initialize_rag_system():
     else:
         st.warning(f"Creating a new vector database...")
         # Read / Process / Split and Vectorize data
-        processed_docs = read_and_process_inputdata('data/evenements-publics-openagenda.json', debug=False)
+        processed_docs = read_and_process_inputdata('data/evenements-publics-openagenda-full.json', debug=False)
         vector_store = text_split_and_vectorize(processed_docs, vector_store, index_path)
         st.success(f"Vector database created and ready to use")
 

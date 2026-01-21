@@ -32,12 +32,13 @@ def read_and_process_inputdata(file_path, debug=False):
         "Title: " + df['title_fr'] + "\n" +
         "Description: " + df['longdescription_fr'] + "\n" +
         "Location: " + df['location_address'].fillna('') + 
+        "city" + df['location_city'].fillna('') + "\n" +
         "Date_Start: " + str(df['firstdate_begin'].fillna('')) +
         "Date_End: " + str(df['lastdate_end'].fillna(''))
     )
 
     # Text + metadata selection
-    metadata_cols = ['uid']
+    metadata_cols = ['uid','location_city','firstdate_begin']
     df_final = df[['combined_text'] + metadata_cols]
     if debug: print(f"DataFrame shape: {df_final.shape}")
 

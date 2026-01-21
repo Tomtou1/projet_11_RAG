@@ -3,6 +3,7 @@ import os
 import faiss
 from dotenv import load_dotenv
 from langchain.chat_models import init_chat_model
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_mistralai import MistralAIEmbeddings
 from langchain_community.docstore.in_memory import InMemoryDocstore
 from langchain_community.vectorstores import FAISS
@@ -20,8 +21,8 @@ def initialize_rag_system():
     # Load keys, model, embeddings
     load_dotenv()
     index_path = "vectorstore/faiss_openagenda_index"
-    model = init_chat_model("mistral-large-latest", model_provider="mistralai")
-    embeddings = MistralAIEmbeddings(model="mistral-embed")
+    model = init_chat_model("mistral-small-latest", model_provider="mistralai")
+    embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 
     embedding_dim = len(embeddings.embed_query("hello world"))
     index = faiss.IndexFlatL2(embedding_dim)

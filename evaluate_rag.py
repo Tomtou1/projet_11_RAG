@@ -1,6 +1,7 @@
 import os
 import json
 import faiss
+from langchain_huggingface import HuggingFaceEmbeddings
 import pandas as pd
 from datasets import Dataset
 from ragas import evaluate
@@ -28,8 +29,8 @@ def initialize_rag_system():
     # Load keys, model, embeddings
     load_dotenv()
     index_path = "vectorstore/faiss_openagenda_index"
-    model = init_chat_model("mistral-large-latest", model_provider="mistralai")
-    embeddings = MistralAIEmbeddings(model="mistral-embed")
+    model = init_chat_model("mistral-small-latest", model_provider="mistralai")
+    embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 
     embedding_dim = len(embeddings.embed_query("hello world"))
     index = faiss.IndexFlatL2(embedding_dim)
@@ -103,14 +104,14 @@ except Exception as e:
 eval_dataset = Dataset.from_pandas(pd.DataFrame(results_data))
 
 # Initialize Mistral LLM
-mistral_llm = ChatMistralAI(model="mistral-large-latest")
+mistral_llm = ChatMistralAI(model="mistral-small-latest")
 
 # Initialize Mistral Embeddings
-mistral_embeddings = MistralAIEmbeddings(model="mistral-embed")
+embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 
 # Wrap them for Ragas
 evaluator_llm = LangchainLLMWrapper(mistral_llm)
-evaluator_embeddings = LangchainEmbeddingsWrapper(mistral_embeddings)
+evaluator_embeddings = LangchainEmbeddingsWrapper(embeddings)
 
 score = evaluate(
     eval_dataset, 

@@ -119,7 +119,6 @@ Le projet utilise des données d'événements culturels au format JSON provenant
 
 Les principaux paramètres configurables :
 
-- **Modèle LLM** : `mistral-large-latest`
-- **Modèle d'embeddings** : `mistral-embed`
-- **Chunk size** : 1000 caractères
+- **Modèle LLM** : `mistral-small-latest`
+- **Modèle d'embeddings** : HuggingFaceEmbeddings: `all-MiniLM-L6-v2`
 - **Nombre de documents récupérés (k)** : 2-5 selon le contexte

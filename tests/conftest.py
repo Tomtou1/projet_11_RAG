@@ -1,4 +1,4 @@
-from langchain_mistralai import MistralAIEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_text_splitters import SpacyTextSplitter
 from src.read_input_data import read_and_process_inputdata
@@ -24,6 +24,6 @@ def chunks(processed_docs):
 def vector_store():
     # Charge l'index FAISS pour l'ensemble des tests
     index_path = "vectorstore/faiss_openagenda_index"
-    embeddings = MistralAIEmbeddings(model="mistral-embed")
+    embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
     vector_store = FAISS.load_local(index_path, embeddings, allow_dangerous_deserialization=True)
     return vector_store

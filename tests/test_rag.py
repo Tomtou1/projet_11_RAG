@@ -1,5 +1,3 @@
-from dotenv import load_dotenv
-
 def test_query_returns_lille_2025_events_only(vector_store):    
     query = "événements culturels"
     

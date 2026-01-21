@@ -22,7 +22,7 @@ def read_and_process_inputdata(file_path, debug=False):
     df = df.dropna(subset=['firstdate_begin'])
     df = df[df['firstdate_begin'].dt.year == 2025]
     if debug: print(f"DataFrame shape after year selection: {df.shape}")
-    df = df[df['location_countrycode'] == 'FR']
+    df = df[df['location_city'] == 'Lille']
     if debug: print(f"DataFrame shape after location selection: {df.shape}")
     df = df.dropna(subset=['longdescription_fr'])
     if debug: print(f"DataFrame shape after dropping NA: {df.shape}")

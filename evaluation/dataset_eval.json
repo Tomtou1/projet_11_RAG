@@ -1,0 +1,10 @@
+[
+    {
+        "question": "Y a-t-il un atelier numérique pour aider les seniors à utiliser des outils numériques?",
+        "ground_truth": "Atelier numérique \"Hackons ensemble les objets du quotidien\" / Les jeunes aident les seniors à comprendre et utiliser des outils numériques, tandis que les seniors enseignent des astuces pour bricoler et réparer au lieu de jeter."
+    },
+    {
+        "question": "Comment puis-je connaître l'histoire de ma maison?",
+        "ground_truth": "Lors des Journées européennes du patrimoine 2025, participez à l'atelier 'Connaître l'histoire de sa maison' pour découvrir les secrets de votre habitation."
+    }
+]

@@ -10,7 +10,7 @@ from langchain_mistralai.chat_models import ChatMistralAI
 from src.create_agent import initialize_rag_system
 
 
-with open("evaluation/dataset_eval.json", 'r', encoding='utf-8') as f:
+with open("evaluation/dataset_eval_2.json", 'r', encoding='utf-8') as f:
     eval_questions = json.load(f)
 
 # Initialize the agent
@@ -45,10 +45,8 @@ except Exception as e:
 
 eval_dataset = Dataset.from_pandas(pd.DataFrame(results_data))
 
-# Initialize Mistral LLM
+# Initialize Mistral LLM / HuggingFace Embeddings
 mistral_llm = ChatMistralAI(model="mistral-small-latest")
-
-# Initialize Mistral Embeddings
 embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 
 # Wrap them for Ragas
@@ -62,5 +60,5 @@ score = evaluate(
     embeddings=evaluator_embeddings
 )
 
-print(score.to_pandas())
-
+score_df = score.to_pandas()
+print(score_df[['Faithfulness', 'AnswerRelevancy', 'ContextRecall', 'AnswerCorrectness']])

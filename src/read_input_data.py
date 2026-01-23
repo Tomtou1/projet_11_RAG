@@ -24,13 +24,13 @@ def read_and_process_inputdata(file_path, debug=False):
     if debug: print(f"DataFrame shape after year selection: {df.shape}")
     df = df[df['location_city'] == 'Lille']
     if debug: print(f"DataFrame shape after location selection: {df.shape}")
-    df = df.dropna(subset=['longdescription_fr'])
+    df = df.dropna(subset=['description_fr'])
     if debug: print(f"DataFrame shape after dropping NA: {df.shape}")
 
     # Feature Engineering for RAG
     df['combined_text'] = (
         "Title: " + df['title_fr'] + "\n" +
-        "Description: " + df['longdescription_fr'] + "\n" +
+        "Description: " + df['description_fr'] + "\n" +
         "Location: " + df['location_address'].fillna('') + 
         "city" + df['location_city'].fillna('') + "\n" +
         "Date_Start: " + str(df['firstdate_begin'].fillna('')) +

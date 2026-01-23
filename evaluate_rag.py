@@ -19,7 +19,7 @@ from src.read_input_data import read_and_process_inputdata
 from src.vectorisation import text_split_and_vectorize
 
 
-with open("evaluation/dataset_eval.json", 'r', encoding='utf-8') as f:
+with open("evaluation/dataset_eval_2.json", 'r', encoding='utf-8') as f:
     eval_questions = json.load(f)
 
 
@@ -102,11 +102,9 @@ except Exception as e:
 
 eval_dataset = Dataset.from_pandas(pd.DataFrame(results_data))
 
-# Initialize Mistral LLM
-mistral_llm = ChatMistralAI(model="mistral-large-latest")
-
-# Initialize Mistral Embeddings
-mistral_embeddings = MistralAIEmbeddings(model="mistral-embed")
+# Initialize Mistral LLM / HuggingFace Embeddings
+mistral_llm = ChatMistralAI(model="mistral-small-latest")
+embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 
 # Wrap them for Ragas
 evaluator_llm = LangchainLLMWrapper(mistral_llm)
@@ -119,5 +117,5 @@ score = evaluate(
     embeddings=evaluator_embeddings
 )
 
-print(score.to_pandas())
-
+score_df = score.to_pandas()
+print(score_df[['Faithfulness', 'AnswerRelevancy', 'ContextRecall', 'AnswerCorrectness']])

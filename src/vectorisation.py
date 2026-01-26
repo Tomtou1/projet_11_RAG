@@ -5,7 +5,7 @@ from src.read_input_data import read_and_process_inputdata
 
 
 def text_split_and_vectorize(documents, vector_store, index_path):
-    nlp_splitter = SpacyTextSplitter(chunk_size=1000, pipeline="fr_core_news_sm")
+    nlp_splitter = SpacyTextSplitter(chunk_size=2000, pipeline="fr_core_news_sm")
 
     chunks = nlp_splitter.split_documents(documents)
     print(f"Number of chunks created: {len(chunks)}")

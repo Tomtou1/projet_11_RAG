@@ -2,6 +2,66 @@
 
 Un chatbot intelligent basé sur RAG (Retrieval-Augmented Generation) pour répondre aux questions sur les événements culturels à Lille en 2025.
 
+## Vue d'ensemble du projet
+
+```mermaid
+graph TD
+    subgraph "Interface Utilisateur"
+        K[Utilisateur<br/>Questions]
+        J[chat.py<br/>Streamlit UI]
+    end
+    
+    K <-->|Interaction| J
+    
+    subgraph "RAG Pipeline"
+        G[create_agent.py<br/>Agent LangChain]
+        H[Retriever<br/>Recherche sémantique]
+        I[Mistral AI<br/>mistral-small-latest]
+    end
+    
+    J -->|Question| G
+    G -->|Recherche| H
+    G <-->|Génération| I
+    G -->|Réponse| J
+    
+    subgraph "Vectorisation"
+        F[FAISS Vector Store<br/>Stockage & Recherche]
+        E[HuggingFace Embeddings<br/>all-MiniLM-L6-v2]
+        D[vectorisation.py<br/>Création embeddings]
+    end
+    
+    H <-->|Requête vectorielle| F
+    F -.->|Utilise| E
+    D -->|Crée| F
+    
+    subgraph "Traitement des Données "
+        C[SpaCy<br/>Traitement NLP]
+        B[read_input_data.py<br/>Chargement & Filtrage]
+        A[OpenAgenda JSON<br/>Événements culturels]
+    end
+    
+    B -->|Traite| C
+    C -->|Prépare| D
+    A -->|Source| B
+    
+    subgraph "Évaluation - Qualité"
+        L[evaluate_rag.py<br/>Métriques RAGAS]
+        M[dataset_eval.json<br/>Données de test]
+    end
+    
+    G -.->|Évalue| L
+    F -.->|Évalue| L
+    M -.->|Test| L
+    
+    style K fill:#e1ffe1
+    style J fill:#e1ffe1
+    style G fill:#ffe1f5
+    style I fill:#ffe1f5
+    style F fill:#fff4e1
+    style A fill:#e1f5ff
+    style L fill:#f5e1ff
+```
+
 ## Description
 
 Ce projet implémente un système de chatbot utilisant l'architecture RAG pour fournir des informations précises sur les événements culturels à Lille. Le système utilise :

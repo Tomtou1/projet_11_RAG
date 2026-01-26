@@ -16,6 +16,6 @@ def test_combined_text(processed_docs):
         # Check that all expected fields are present
         assert 'Title:' in content, "combined_text should contain 'Title:'"
         assert 'Description:' in content, "combined_text should contain 'Description:'"
-        assert 'Location:' in content, "combined_text should contain 'Location:'"
-        assert 'Date_Start:' in content, "combined_text should contain 'Date_Start:'"
-        assert 'Date_End:' in content, "combined_text should contain 'Date_End:'"
+        assert 'Localisation:' in content, "combined_text should contain 'Localisation:'"
+        assert 'Date de début:' in content, "combined_text should contain 'Date de début:'"
+        assert 'Date de fin:' in content, "combined_text should contain 'Date de fin:'"

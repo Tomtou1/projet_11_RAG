@@ -6,5 +6,17 @@
     {
         "question": "Comment puis-je connaître l'histoire de ma maison?",
         "ground_truth": "Lors des Journées européennes du patrimoine 2025, participez à l'atelier 'Connaître l'histoire de sa maison' pour découvrir les secrets de votre habitation."
+    },
+    {
+        "question": "Mes enfants ont 14 et 16 ans. Existe t'il des camps d'une ou deux semaines cet été pour moins de 1000 euros?",
+        "ground_truth": "Camps d'été pour collégiens et lycéens - Pour tous les collégiens et lycéens du Nord Pas de Calais - du 18 au 25 juillet : camp Cap Nord pour les 11-14 ans entre 250€ et 350€ - du 18 au 31 : camp Meurthe et Mos'Art (54) pour les 13-15 ans entre 450€ et 650 € - du 21 juillet au 3 août : camp des Zazous (Tarn 81) pour les 15-17 ans entre 450€ et 650€ "
+    },
+    {
+        "question": "Je cherche une pièce de théatre sur l'avenir. Avec tous les évènements de l'actualité, toutes ces catastrophes, peut-on encore avoir de la joie? ",
+        "ground_truth": "Creuser la joie Un avenir joyeux est-il possible ? Malgré les apparences, c’est une hypothèse à creuser, et c’est ce qu’ambitionne de faire ce spectacle plein d’énergie et empreint d’optimisme."
+    },
+    {
+        "question": "Comment faire cuire un oeuf au plat?",
+        "ground_truth": "Je ne peux pas fournir des informations sur comment cuire un oeuf au plat. Par contre, je peux vous recommander des évènements culturels."
     }
 ]

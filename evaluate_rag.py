@@ -5,12 +5,13 @@ from datasets import Dataset
 from ragas import evaluate
 from ragas.llms import LangchainLLMWrapper
 from ragas.embeddings import LangchainEmbeddingsWrapper
-from ragas.metrics import Faithfulness, AnswerRelevancy, ContextRecall, AnswerCorrectness
+from ragas.metrics import Faithfulness, AnswerRelevancy, ContextPrecision, ContextRecall, ContextRelevance
 from langchain_mistralai.chat_models import ChatMistralAI
 from src.create_agent import initialize_rag_system
 
 
-with open("evaluation/dataset_eval_2.json", 'r', encoding='utf-8') as f:
+
+with open("evaluation/dataset_eval.json", 'r', encoding='utf-8') as f:
     eval_questions = json.load(f)
 
 # Initialize the agent
@@ -52,13 +53,19 @@ embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 # Wrap them for Ragas
 evaluator_llm = LangchainLLMWrapper(mistral_llm)
 evaluator_embeddings = LangchainEmbeddingsWrapper(embeddings)
-
+# Evaluate
 score = evaluate(
-    eval_dataset, 
-    metrics=[Faithfulness(), AnswerRelevancy(), ContextRecall(), AnswerCorrectness()], 
+    eval_dataset,
+    metrics=[Faithfulness(), AnswerRelevancy(), ContextRecall(), ContextPrecision(), ContextRelevance()],
     llm=evaluator_llm,
     embeddings=evaluator_embeddings
 )
 
 score_df = score.to_pandas()
-print(score_df[['Faithfulness', 'AnswerRelevancy', 'ContextRecall', 'AnswerCorrectness']])
+
+# Save the evaluation results locally
+score_df.to_csv("evaluation/evaluation_results.csv", index=False)
+print("Resultats sauvegardés dans evaluation/evaluation_results.csv")
+
+# Print the actual metric columns
+print(score_df[['faithfulness', 'answer_relevancy', 'context_recall', 'context_precision', 'nv_context_relevance']])

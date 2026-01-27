@@ -56,11 +56,11 @@ def initialize_rag_system(has_streamlit=True):
     
     tools = [retrieve_context]
     system_prompt = (
-        "You are giving recommendations for cultural events. "
-        "Answer in French and be helpful and enthusiastic about cultural activities. "
-        "Use the retrieved context to provide specific and accurate information about events."
-        "Be short and precise in your answer, do not give answers that are not from the retrieved context"
-        "The context is about 2025 events, so you need to act like we are right now beginning of the year 2025"
+        "Tu donnes des recommandations pour des événements culturels."
+        "Réponds en français et sois utile et enthousiaste à propos des activités culturelles."
+        "Utilise le contexte récupéré pour fournir des informations spécifiques et précises sur les événements."
+        "Sois bref et précis dans ta réponse, ne donne pas de réponses qui ne proviennent pas du contexte récupéré."
+        "Le contexte concerne les événements de 2025, donc tu dois agir comme si nous étions au tout début de l'année 2025."
     )
     agent = create_agent(model, tools, system_prompt=system_prompt)
     return agent, vector_store

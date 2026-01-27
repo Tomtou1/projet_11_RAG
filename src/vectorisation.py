@@ -23,7 +23,7 @@ def get_vector_store(embedding_dim, index_path):
     else:
         print(f"Creating a new vector db:")  
         # Read and process data
-        processed_docs = read_and_process_inputdata('data/evenements-publics-openagenda.json', debug=True)
+        processed_docs = read_and_process_inputdata('data/evenements-publics-openagenda-full.json', debug=True)
         print(f"\nNumber of documents: {len(processed_docs)}")
         print(f"\nFirst Doc: {processed_docs[0]}")
         

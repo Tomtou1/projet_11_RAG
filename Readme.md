@@ -53,13 +53,28 @@ graph TD
     F -.->|Évalue| L
     M -.->|Test| L
     
-    style K fill:#e1ffe1
-    style J fill:#e1ffe1
-    style G fill:#ffe1f5
-    style I fill:#ffe1f5
-    style F fill:#fff4e1
-    style A fill:#e1f5ff
-    style L fill:#f5e1ff
+    %% Interface Utilisateur - Vert clair
+    style K fill:#a8e6cf,stroke:#56ab91,stroke-width:2px,color:#000
+    style J fill:#a8e6cf,stroke:#56ab91,stroke-width:2px,color:#000
+    
+    %% RAG Pipeline - Bleu clair
+    style G fill:#81b3ff,stroke:#4a7fa8,stroke-width:2px,color:#000
+    style H fill:#81b3ff,stroke:#4a7fa8,stroke-width:2px,color:#000
+    style I fill:#81b3ff,stroke:#4a7fa8,stroke-width:2px,color:#000
+    
+    %% Vectorisation - Orange clair
+    style F fill:#ffb366,stroke:#cc7a3d,stroke-width:2px,color:#000
+    style E fill:#ffb366,stroke:#cc7a3d,stroke-width:2px,color:#000
+    style D fill:#ffb366,stroke:#cc7a3d,stroke-width:2px,color:#000
+    
+    %% Traitement des Données - Jaune clair
+    style C fill:#ffe066,stroke:#ccb34d,stroke-width:2px,color:#000
+    style B fill:#ffe066,stroke:#ccb34d,stroke-width:2px,color:#000
+    style A fill:#ffe066,stroke:#ccb34d,stroke-width:2px,color:#000
+    
+    %% Évaluation - Violet clair
+    style L fill:#d4a5d4,stroke:#9c6f9c,stroke-width:2px,color:#000
+    style M fill:#d4a5d4,stroke:#9c6f9c,stroke-width:2px,color:#000
 ```
 
 ## Description

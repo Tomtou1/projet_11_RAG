@@ -37,8 +37,8 @@ print(f"  - Contenu : {documents[0].page_content[:200]}...")
 
 # Testset creation and saving
 testset = generator.generate_with_langchain_docs(
-    documents[:50], 
-    testset_size=10, 
+    documents[:100], 
+    testset_size=20, 
     with_debugging_logs=True, 
     run_config=RunConfig(max_workers=1)
 )
@@ -49,5 +49,5 @@ testset_pd = testset.to_pandas()
 print(testset_pd.head())
 print(f"\nNombre total d'échantillons générés: {len(testset_pd)}")
 
-testset.to_jsonl("evaluation/dataset_eval.jsonl")
-print(f"\nJeu de test sauvegardé dans 'evaluation/dataset_eval.jsonl'")
+testset.to_jsonl("evaluation/dataset_eval_ai.jsonl")
+print(f"\nJeu de test sauvegardé dans 'evaluation/dataset_eval_ai.jsonl'")

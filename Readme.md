@@ -164,11 +164,14 @@ Il est possible de la supprimer et elle sera recréée enc hargeant les données
 python evaluate_rag.py
 ```
 
+L'évaluation peut être effectuée à partir de questions/réponses générées par humain, dans le fichier dataset_eval_human, mais également par un dataset créé par l'IA dataset_eval_ai.
+
 Évalue le système RAG avec les métriques RAGAS :
-- Faithfulness (fidélité)
-- Answer Relevancy (pertinence)
-- Context Recall (rappel du contexte)
-- Answer Correctness (exactitude)
+- Faithfulness 
+- Answer Relevancy 
+- Context Recall 
+- Answer Correctness 
+- Context Relevance 
 
 ## Tests
 

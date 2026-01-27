@@ -9,10 +9,25 @@ from ragas.metrics import Faithfulness, AnswerRelevancy, ContextPrecision, Conte
 from langchain_mistralai.chat_models import ChatMistralAI
 from src.create_agent import initialize_rag_system
 
+# Select True to load AI-generated dataset, false to use the human one
+use_ai_generated_dataset = False
 
+eval_questions = []
 
-with open("evaluation/dataset_eval.json", 'r', encoding='utf-8') as f:
-    eval_questions = json.load(f)
+# Load the evaluation dataset
+if not use_ai_generated_dataset:
+    with open("evaluation/dataset_eval_human.json", 'r', encoding='utf-8') as f:
+        eval_questions = json.load(f)
+else:   
+    # Load the AI-generated dataset 
+    with open("evaluation/dataset_eval_ai.jsonl", 'r', encoding='utf-8') as f:
+        for line in f:
+            data = json.loads(line)
+            eval_questions.append({
+                "question": data["user_input"],  
+                "ground_truth": data["reference"]  
+            })
+
 
 # Initialize the agent
 agent, vector_store = initialize_rag_system(has_streamlit=False)
@@ -63,9 +78,14 @@ score = evaluate(
 
 score_df = score.to_pandas()
 
+if not use_ai_generated_dataset:
+    name="human_evaluation"
+else:
+    name="ai_evaluation"
+
 # Save the evaluation results locally
-score_df.to_csv("evaluation/evaluation_results.csv", index=False)
-print("Resultats sauvegardés dans evaluation/evaluation_results.csv")
+score_df.to_csv(f"evaluation/{name}_results.csv", index=False)
+print(f"Resultats sauvegardés dans evaluation/{name}_results.csv")
 
 # Print the actual metric columns
 print(score_df[['faithfulness', 'answer_relevancy', 'context_recall', 'context_precision', 'nv_context_relevance']])

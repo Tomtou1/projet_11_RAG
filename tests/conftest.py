@@ -16,7 +16,7 @@ def processed_docs():
 
 @pytest.fixture(scope="session")
 def chunks(processed_docs):
-    nlp_splitter = SpacyTextSplitter(chunk_size=2000, pipeline="fr_core_news_sm")
+    nlp_splitter = SpacyTextSplitter(chunk_size=4000, pipeline="fr_core_news_sm")
     chunks = nlp_splitter.split_documents(processed_docs)
     return chunks
 

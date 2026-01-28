@@ -21,14 +21,21 @@ def initialize_rag_system(has_streamlit=True):
     embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 
     embedding_dim = len(embeddings.embed_query("hello world"))
-    index = faiss.IndexFlatL2(embedding_dim)
 
+    #Creation Faiss index IVF
+    #index = faiss.IndexFlatL2(embedding_dim) #old flat index
+    n_clusters = 21
+    quantizer = faiss.IndexFlatL2(embedding_dim)
+    index = faiss.IndexIVFFlat(quantizer, embedding_dim, n_clusters)
+    index.nprobe = 7
+    
     vector_store = FAISS(
         embedding_function=embeddings,
         index=index,
         docstore=InMemoryDocstore(),
         index_to_docstore_id={},
     )
+
     
     # Load existing vector database or create a new one
     if os.path.exists(index_path):

@@ -2,7 +2,7 @@ import json
 from langchain_huggingface import HuggingFaceEmbeddings
 import pandas as pd
 from datasets import Dataset
-from ragas import evaluate
+from ragas import RunConfig, evaluate
 from ragas.llms import LangchainLLMWrapper
 from ragas.embeddings import LangchainEmbeddingsWrapper
 from ragas.metrics import Faithfulness, AnswerRelevancy, ContextPrecision, ContextRecall, ContextRelevance
@@ -68,13 +68,17 @@ embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 # Wrap them for Ragas
 evaluator_llm = LangchainLLMWrapper(mistral_llm)
 evaluator_embeddings = LangchainEmbeddingsWrapper(embeddings)
+
+
 # Evaluate
 score = evaluate(
     eval_dataset,
     metrics=[Faithfulness(), AnswerRelevancy(), ContextRecall(), ContextPrecision(), ContextRelevance()],
     llm=evaluator_llm,
-    embeddings=evaluator_embeddings
+    embeddings=evaluator_embeddings, 
+    run_config=RunConfig(max_workers=1)
 )
+
 
 score_df = score.to_pandas()
 

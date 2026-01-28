@@ -46,7 +46,7 @@ graph TD
     
     subgraph "Évaluation - Qualité"
         L[evaluate_rag.py<br/>Métriques RAGAS]
-        M[dataset_eval.json<br/>Données de test]
+        M[dataset_eval_human.json<br/>dataset_eval_ai.jsonl<br/>Données de test]
     end
     
     G -.->|Évalue| L
@@ -81,10 +81,12 @@ graph TD
 
 Ce projet implémente un système de chatbot utilisant l'architecture RAG pour fournir des informations précises sur les événements culturels à Lille. Le système utilise :
 - **LangChain** pour l'orchestration du workflow RAG
-- **Spacy** pour le traitement du texte en français
-- **FAISS** pour le stockage et la recherche vectorielle
-- **Mistral AI** pour les embeddings et la génération de réponses
+- **SpaCy** (`fr_core_news_sm`) pour le traitement du texte en français
+- **FAISS** (IndexIVFFlat avec 21 clusters) pour le stockage et la recherche vectorielle optimisée
+- **HuggingFace Embeddings** (`all-MiniLM-L6-v2`) pour la vectorisation des documents
+- **Mistral AI** (`mistral-small-latest`) pour la génération de réponses
 - **Streamlit** pour l'interface utilisateur interactive
+- **RAGAS** pour l'évaluation de la qualité du système RAG
 
 ## Architecture
 
@@ -155,7 +157,7 @@ Le chatbot sera accessible à l'adresse : `http://localhost:8501`
 
 ### Initialiser ou mettre à jour la base vectorielle
 
-La base vectorielle existe déjà.
+La base vectorielle existe déjà dans le dossier vectorstore/faiss_openagenda_index.
 Il est possible de la supprimer et elle sera recréée enc hargeant les données des événements depuis `data/evenements-publics-openagenda.json` et les filtre (Lille, 2025)
 
 ### Évaluer les performances du RAG
@@ -164,14 +166,22 @@ Il est possible de la supprimer et elle sera recréée enc hargeant les données
 python evaluate_rag.py
 ```
 
-L'évaluation peut être effectuée à partir de questions/réponses générées par humain, dans le fichier dataset_eval_human, mais également par un dataset créé par l'IA dataset_eval_ai.
+L'évaluation peut être effectuée avec deux datasets différents :
+- **Dataset humain** : `evaluation/dataset_eval_human.json` - Questions/réponses créées manuellement
+- **Dataset IA** : `evaluation/dataset_eval_ai.jsonl` - Questions/réponses générées automatiquement 
 
-Évalue le système RAG avec les métriques RAGAS :
-- Faithfulness 
-- Answer Relevancy 
-- Context Recall 
-- Answer Correctness 
-- Context Relevance 
+Pour changer de dataset, modifiez la variable `use_ai_generated_dataset` dans `evaluate_rag.py`.
+
+#### Métriques RAGAS évaluées :
+- **Faithfulness** : Fidélité de la réponse par rapport au contexte récupéré
+- **Answer Relevancy** : Pertinence de la réponse à la question posée
+- **Context Recall** : Capacité à récupérer les informations nécessaires
+- **Context Precision** : Précision du contexte récupéré
+- **Context Relevance** : Pertinence du contexte par rapport à la question
+
+Les résultats sont sauvegardés dans :
+- `evaluation/human_evaluation_results.csv` (pour le dataset humain)
+- `evaluation/ai_evaluation_results.csv` (pour le dataset IA) 
 
 ## Tests
 
@@ -180,23 +190,28 @@ Lancer tous les tests :
 pytest
 ```
 
-Lancer des tests spécifiques :
-```bash
-pytest tests/test_read_input_data.py
-pytest tests/test_vectorisation.py
-pytest tests/test_rag.py
-```
-
 ## Données
 
-Le projet utilise des données d'événements culturels au format JSON provenant d'OpenAgenda. Les données sont filtrées pour :
-- **Ville** : Lille
-- **Année** : 2025
+Le projet utilise des données d'événements culturels au format JSON provenant d'OpenAgenda.
+
+### Caractéristiques des données :
+- **Source** : `data/evenements-publics-openagenda-full.json`
+- **Filtre géographique** : Lille
+- **Filtre temporel** : Année 2025
 
 ## Configuration
 
-Les principaux paramètres configurables :
+**Modèle LLM :**
+- Fournisseur : Mistral AI
+- Modèle : `mistral-small-latest`
 
-- **Modèle LLM** : `mistral-small-latest`
-- **Modèle d'embeddings** : HuggingFaceEmbeddings: `all-MiniLM-L6-v2`
-- **Nombre de documents récupérés (k)** : 2-5 selon le contexte
+**Embeddings :**
+- Modèle : `all-MiniLM-L6-v2` (HuggingFace)
+
+**Base vectorielle FAISS :**
+- Type d'index : `IndexIVFFlat` (Inverted File with Flat Quantizer)
+- Nombre de clusters : 21
+- Nprobe : 7 (nombre de clusters à visiter lors de la recherche)
+
+**Traitement du texte :**
+- Splitter : `SpacyTextSplitter` - `fr_core_news_sm` 

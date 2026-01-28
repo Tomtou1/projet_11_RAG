@@ -12,8 +12,8 @@
         "ground_truth": "Camps d'été pour collégiens et lycéens - Pour tous les collégiens et lycéens du Nord Pas de Calais - du 18 au 25 juillet : camp Cap Nord pour les 11-14 ans entre 250€ et 350€ - du 18 au 31 : camp Meurthe et Mos'Art (54) pour les 13-15 ans entre 450€ et 650 € - du 21 juillet au 3 août : camp des Zazous (Tarn 81) pour les 15-17 ans entre 450€ et 650€ "
     },
     {
-        "question": "Je cherche une pièce de théatre sur l'avenir. Avec tous les évènements de l'actualité, toutes ces catastrophes, peut-on encore avoir de la joie? ",
-        "ground_truth": "Creuser la joie Un avenir joyeux est-il possible ? Malgré les apparences, c’est une hypothèse à creuser, et c’est ce qu’ambitionne de faire ce spectacle plein d’énergie et empreint d’optimisme."
+        "question": "Lors de la semaine du tourisme, y a t'il un atelier découverte des métiers de la restauration?",
+        "ground_truth": "Cet atelier est conçu pour vous offrir une expérience immersive et enrichissante dans le monde passionnant de la restauration et vous permettre de mieux comprendre ce qui est attendu dans le cadre de la restauration sur l'ensemble des métiers. Il se déroulera au lycée hôtelier de Lille le 14 mars 2025 de 9h à 11h30. "
     },
     {
         "question": "Comment faire cuire un oeuf au plat?",

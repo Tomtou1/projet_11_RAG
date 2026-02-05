@@ -151,7 +151,7 @@ preshed==3.0.12
 prettytable==3.17.0
 prometheus_client==0.24.1
 propcache==0.4.1
-protobuf==6.33.4
+protobuf==6.33.5
 psutil==7.2.1
 pyarrow==23.0.0
 pycadf==4.0.1
